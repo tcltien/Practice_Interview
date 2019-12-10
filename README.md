@@ -5,3 +5,6 @@
 - BankingRecommendation (using java)
 - FindingPath (using java)
 - Hotel(using java) with time complexity is O(nlog(n))
+
+
+References https://github.com/williamfiset/Algorithms/blob/master/com/williamfiset/algorithms/graphtheory/TopologicalSortAdjacencyList.java
