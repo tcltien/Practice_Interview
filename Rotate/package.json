@@ -1,0 +1,14 @@
+{
+  "name": "com.tl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "RotatePicture.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "tl",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^6.2.2"
+  }
+}
