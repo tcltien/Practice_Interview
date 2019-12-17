@@ -32,41 +32,93 @@ function RotateService() {
     /*
         Rotate Matrix with cycle
     */
-    function rotateMatrix2D_90Degree(matrix, cycle) {
+    function rotatePicture(matrix, cycle) {
         if (cycle == 0) {
             return matrix;
         }
         var rotate_cycle = cycle % 4;
         var count = 0
-        while (count < rotate_cycle) {
-            var length = matrix.length - 1;
-            for (var i = 0; i < length / 2; i++) {
-                for (var j = i; j < length - i; j++) {
-                    var p1 = matrix[i][j];
-                    //Coordinate 2
-                    var p2 = matrix[j][length - i];
-                    //Coordinate 3
-                    var p3 = matrix[length - i][length - j];
-                    //Coordinate 4
-                    var p4 = matrix[length - j][i];
-                    //Swap values of 4 coordinates
-                    matrix[j][length - i] = p1; // right top
-                    matrix[length - i][length - j] = p2; // right bottom
-                    matrix[length - j][i] = p3; // left bottom
-                    matrix[i][j] = p4; // left top
-                }
-            }
-            count++;
+        switch (rotate_cycle) {
+            case 1:
+                rotateClockWise_90Degree(matrix);
+                break;
+            case 2:
+                rotateMatrix2D_180Degree(matrix);
+                break;
+            case 3:
+                rotateCounterClockWise_90Degree(matrix);
+                break;
+            default:
+                return matrix;
         }
         console.log("after rotate matrix with " + cycle + " cycle");
         console.log(matrix);
         return matrix;
     }
 
+    /*
+        Function Rotate 90 degree clockwise 
+    */
+    function rotateClockWise_90Degree(matrix) {
+        swapRows(matrix);
+        transpose(matrix);
+    }
+
+    /*
+        Function Rotate 90 degree counter clockwise 
+    */
+    function rotateCounterClockWise_90Degree(matrix) {
+        transpose(matrix);
+        swapRows(matrix);
+    }
+
+    /*
+        Function Rotate 180 degree
+    */
+    function rotateMatrix2D_180Degree(matrix) {
+        var N = matrix.length;
+        for (var i = 0; i < N / 2; i++) {
+            for (var j = 0; j < N; j++) {
+                var temp = matrix[i][j];
+                matrix[i][j] = matrix[N - i - 1][N - j - 1];
+                matrix[N - i - 1][N - j - 1] = temp;
+            }
+        }
+        return matrix;
+    }
+
+    /*
+        Function swap rows
+    */
+    function swapRows(m) {
+        for (var  i = 0, k = m.length - 1; i < k; ++i, --k) {
+            var x = m[i];
+            m[i] = m[k];
+            m[k] = x;
+        }
+        return m;
+    }
+
+    /*
+        Function transpose matrix
+    */
+    function transpose(m) {
+        for (var i = 0; i < m.length; i++) {
+            for (var j = i; j < m[0].length; j++) {
+                var x = m[i][j];
+                m[i][j] = m[j][i];
+                m[j][i] = x;
+            }
+        }
+    }
+
     return {
         create2DArray,
         buildMatrix,
-        rotateMatrix2D_90Degree
+        rotatePicture,
+        rotateMatrix2D_180Degree,
+        rotateClockWise_90Degree,
+        rotateCounterClockWise_90Degree
     }
 }
 module.exports = RotateService();

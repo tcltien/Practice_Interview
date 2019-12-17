@@ -29,43 +29,97 @@ function buildMatrix(matrixSize) {
     return r_matrix;
 }
 
+function buildMatrix2(matrixSize) {
+    var r_matrix = create2DArray(matrixSize);
+    var value = 0;
+    for (var i = 0; i < matrixSize; i++) {
+        for (var j = 0; j < matrixSize; j++) {
+            r_matrix[i][j] = 0;
+        }
+    }
+    console.log("Matrix after initilize");
+    console.log(r_matrix);
+    return r_matrix;
+}
+
 /*
     Rotate Matrix with cycle
 */
-function rotateMatrix2D_90Degree(matrix, k, numRows) {
+function rotateMatrix2D_90Degree(matrix) {
     // temporary array of size M 
-    var temp = new Array(numRows);
-          
-    // within the size of matrix 
-    k = k % numRows; 
-      
-    for (var i = 0; i < numRows; i++) 
-    {     
-        // copy first M-k elements  
-        // to temporary array 
-        for (var t = 0; t < numRows - k; t++) {
-            temp[t] = matrix[i][t]; 
+    var length = matrix.length-1;
+    for (var i = 0; i <= length/2; i++) {
+        for (var j = i; j < length-i; j++) {
+         //Coordinate 1
+         var p1 = matrix[i][j];
+         //Coordinate 2
+         var p2 = matrix[j][length-i];
+         //Coordinate 3
+         var p3 = matrix[length-i][length-j];
+         //Coordinate 4
+         var p4 = matrix[length-j][i];
+         //Swap values of 4 coordinates.
+         matrix[j][length-i] = p1;
+         matrix[length-i][length-j] = p2;
+         matrix[length-j][i] = p3;
+         matrix[i][j] = p4;
         }
-        // copy the elements from k  
-        // to end to starting 
-        for (var j = numRows - k; j < numRows; j++) {
-            matrix[i][j - numRows + k] = matrix[i][j]; 
-        }
-        // copy elements from  
-        // temporary array to end 
-        for (var j = k; j < numRows; j++) {
-            matrix[i][j] = temp[j - k]; 
-        }
-    } 
-    console.log("after rotate matrix with " + k + " cycle");
-    console.log(matrix);
+    }
     return matrix;
 }
 
-
-
-if (process.argv[2] == null || process.argv[3] == null) {
-    console.log("Please input params");
-    return;
+function rotateMatrix180(matrix) {
+    var N = matrix.length;
+    for(var i=0;i<N/2;i++) { 
+        for(var j=0;j<N;j++) { 
+            var temp = matrix[i][j]; 
+            matrix[i][j] = matrix[N-i-1][N-j-1]; 
+            matrix[N-i-1][N-j-1] = temp; 
+        }
+    }
+    return matrix; 
 }
-rotateMatrix2D_90Degree(buildMatrix(process.argv[2]), process.argv[3], process.argv[4]);
+
+function rotateMatrix90Counter(matrix) {
+    if (matrix.length == 0) {
+        return;
+    }
+    for (var i = 0; i < matrix.length / 2; i++) {
+        var top = i;
+        var bottom = matrix.length - 1 - i;
+        for (var j = top; j < bottom; j++) {
+            var temp = matrix[top][j];
+            matrix[top][j] = matrix[j][bottom];
+            matrix[j][bottom] = matrix[bottom][bottom - (j - top)];
+            matrix[bottom][bottom - (j - top)] = matrix[bottom - (j - top)][top];
+            matrix[bottom - (j - top)][top] = temp;
+        }
+    }
+    return matrix;
+}
+
+function swapRows(m) {
+    for (var  i = 0, k = m.length - 1; i < k; ++i, --k) {
+        var x = m[i];
+        m[i] = m[k];
+        m[k] = x;
+    }
+    transpose(m);
+    console.log("aaaa");
+    console.log(m);
+    return m;
+}
+
+function transpose(m) {
+    for (var i = 0; i < m.length; i++) {
+        for (var j = i; j < m[0].length; j++) {
+            var x = m[i][j];
+            m[i][j] = m[j][i];
+            m[j][i] = x;
+        }
+    }
+}
+swapRows(buildMatrix(4));
+// rotateMatrix90Counter(buildMatrix(4))
+// rotateMatrix180(buildMatrix(4));
+// rotateMatrix2D_90Degree(buildMatrix(4), 4);
