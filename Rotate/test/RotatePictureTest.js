@@ -41,6 +41,24 @@ describe('rotatePicture', function () {
             arr = rotateService.rotatePicture(arr, 1);
             assert.equal(3, arr[2][2]);
         })
+
+        it('should be return right value at position [0,0] after rotate 1 times', function () {
+            var arr = rotateService.buildMatrix(4);
+            arr = rotateService.rotatePicture(arr, 1);
+            assert.equal(13, arr[0][0]);
+        })
+
+        it('should be return right value at position [0,0] after rotate 2 times', function () {
+            var arr = rotateService.buildMatrix(4);
+            arr = rotateService.rotatePicture(arr, 2);
+            assert.equal(16, arr[0][0]);
+        })
+
+        it('should be return right value at position [0,0] after rotate 3 times', function () {
+            var arr = rotateService.buildMatrix(4);
+            arr = rotateService.rotatePicture(arr, 3);
+            assert.equal(4, arr[0][0]);
+        })
     })
     
 
