@@ -9,7 +9,7 @@
   "author": "tl",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^6.2.2"
+    "mocha": "^10.2.0"
   },
   "dependencies": {
     "nyc": "^14.1.1"
